@@ -1,0 +1,95 @@
+Makefile=Makefile.NT.CLdll
+CC=cl
+CFLAG=-c /G5 /Gd 
+LINK=link 
+LFLAG=/dll /out:ultimate.dll /def:ultimate.def /implib:ultimate.lib 
+OBJ=obj 
+
+.c.$(OBJ):
+	$(CC) $(CFLAG) $<
+
+all:    ultimate.lib 
+
+ultimate.lib:  atnat2.$(OBJ) mpatan.$(OBJ)  mpatan2.$(OBJ) \
+               uasncs.$(OBJ) doasin.$(OBJ) dosincos.$(OBJ) \
+               sincos32.$(OBJ) DPChange.$(OBJ)\
+               uexp.$(OBJ) slowexp.$(OBJ) mpexp.$(OBJ) \
+               ulog.$(OBJ)  mplog.$(OBJ) atnat.$(OBJ) \
+               usncs.$(OBJ) branred.$(OBJ) \
+               utan.$(OBJ) mptan.$(OBJ) \
+               uroot.$(OBJ) urem.$(OBJ) \
+               upow.$(OBJ)     slowpow.$(OBJ) halfulp.$(OBJ) \
+               ulog2.$(OBJ)    slowlog2.$(OBJ) \
+               uexp2.$(OBJ)    slowexp2.$(OBJ) \
+               ucot.$(OBJ)    slowcot.$(OBJ) \
+               mpsqrt.$(OBJ)  mpa.$(OBJ) \
+               ultimate.def $(Makefile)  
+	erase ultimate.lib  
+	erase ultimate.dll
+	$(LINK) $(LFLAG)  atnat2.$(OBJ) mpatan.$(OBJ) mpatan2.$(OBJ) \
+                         uasncs.$(OBJ) doasin.$(OBJ) dosincos.$(OBJ) \
+                         sincos32.$(OBJ) DPChange.$(OBJ) \
+                         uexp.$(OBJ) slowexp.$(OBJ) mpexp.$(OBJ) \
+                         ulog.$(OBJ) mplog.$(OBJ) atnat.$(OBJ) \
+                         usncs.$(OBJ) branred.$(OBJ) \
+                         utan.$(OBJ) mptan.$(OBJ) \
+                         uroot.$(OBJ) urem.$(OBJ) \
+                         ulog2.$(OBJ)    slowlog2.$(OBJ) \
+                         uexp2.$(OBJ)    slowexp2.$(OBJ) \
+                         ucot.$(OBJ)    slowcot.$(OBJ) \
+                         upow.$(OBJ)    slowpow.$(OBJ) halfulp.$(OBJ) \
+                         mpsqrt.$(OBJ)  mpa.$(OBJ)  
+
+atnat2.$(OBJ):     atnat2.c atnat2.h uatan.tbl dla.h mpa.h endian.h $(Makefile) 
+atnat.$(OBJ):     atnat.c atnat.h uatan.tbl dla.h mpa.h endian.h $(Makefile) 
+mpatan.$(OBJ):     mpatan.c mpa.h endian.h $(Makefile) 
+mpatan2.$(OBJ):    mpatan2.c mpa.h endian.h $(Makefile) 
+mpsqrt.$(OBJ):     mpsqrt.c mpa.h endian.h $(Makefile) 
+uasncs.$(OBJ):    uasncs.c endian.h mydefs.h asincos.tbl root.tbl powtwo.tbl $(Makefile)
+doasin.$(OBJ):     doasin.c dla.h mydefs.h endian.h $(Makefile)
+dosincos.$(OBJ):     dosincos.c dla.h endian.h sincos.tbl $(Makefile)
+sincos32.$(OBJ):     sincos32.c mpa.h endian.h $(Makefile)
+uexp.$(OBJ):     uexp.c mydefs.h uexp.tbl endian.h $(Makefile) 
+slowexp.$(OBJ):     slowexp.c mpa.h $(Makefile) 
+ulog.$(OBJ):     ulog.c ulog.tbl endian.h dla.h mpa.h $(Makefile) 
+mplog.$(OBJ):     mplog.c mpa.h endian.h $(Makefile) 
+mpexp.$(OBJ):     mpexp.c mpa.h endian.h $(Makefile) 
+usncs.$(OBJ):    usncs.c endian.h mydefs.h sincos.tbl $(Makefile) 
+branred.$(OBJ):    branred.c endian.h mydefs.h  $(Makefile)
+utan.$(OBJ):    utan.c endian.h mydefs.h utan.tbl dla.h $(Makefile) 
+mptan.$(OBJ):    mptan.c endian.h mydefs.h mpa.h $(Makefile) 
+uroot.$(OBJ):    uroot.c endian.h mydefs.h dla.h root.tbl  $(Makefile) 
+urem.$(OBJ):    urem.c endian.h mydefs.h $(Makefile) 
+upow.$(OBJ):     upow.c endian.h mydefs.h dla.h upow.tbl $(Makefile)
+slowpow.$(OBJ):     slowpow.c mpa.h $(Makefile)
+halfulp.$(OBJ):     halfulp.c endian.h mydefs.h dla.h $(Makefile)
+mpa.$(OBJ):     mpa.c mpa.h endian.h $(Makefile) 
+uexp2.$(OBJ):      uexp2.c  uexp.h  mydefs.h  \
+                   uexp.tbl  endian.h $(Makefile)                     
+slowexp2.$(OBJ):   slowexp2.c  mpa.h $(Makefile)                      
+ulog2.$(OBJ):      ulog2.c  ulog.h  ulog.tbl  \
+                   endian.h  dla.h  mpa.h $(Makefile)          
+slowlog2.$(OBJ):   slowlog2.c  mpa.h $(Makefile)                      
+ucot.$(OBJ):       ucot.c slowcot.c  ucot.h  endian.h  \
+                   mydefs.h  ucot.tbl  dla.h $(Makefile)       
+slowcot.$(OBJ):    slowcot.c  mpa.h $(Makefile)                       
+DPChange.$(OBJ):	DPChange.h DPChange.c $(Makefile) 
+
+
+clean: 
+	 erase  atnat2.$(OBJ) mpatan.$(OBJ) mpatan2.$(OBJ) \
+                uasncs.$(OBJ) doasin.$(OBJ) dosincos.$(OBJ) \
+                sincos32.$(OBJ) DPChange.$(OBJ)\
+                uexp.$(OBJ) slowexp.$(OBJ) mpexp.$(OBJ) \
+                ulog.$(OBJ) mplog.$(OBJ) atnat.$(OBJ) \
+                usncs.$(OBJ) branred.$(OBJ) \
+                utan.$(OBJ) mptan.$(OBJ) \
+                uroot.$(OBJ) urem.$(OBJ) \
+                upow.$(OBJ) slowpow.$(OBJ) halfulp.$(OBJ) \
+                mpsqrt.$(OBJ)  mpa.$(OBJ) \
+                ucot.$(OBJ) slowcot.$(OBJ) \
+                uexp2.$(OBJ) slowexp2.$(OBJ) \
+                ulog2.$(OBJ) slowlog2.$(OBJ) \
+                ultimate.lib ultimate.dll ultimate.exp \
+         
+
